@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-iphonex: 330px;
+    --breakpoint-iphone: 350px;
+    --breakpoint-xs: 400px;
+    --breakpoint-xsm: 480px;
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1000px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+    /* laptop */
+    --breakpoint-3xl: 1536px;
+    --breakpoint-4xl: 1800px;
+    --breakpoint-5xl: 2000px;
+
+
+}
+
+
+.bg-custom-gradient {
+    background-image: linear-gradient(91.39deg, #847AFF 2.96%, #7D47E4 94.55%);
+
+
+}
+
+.bg-custom-gradient2 {
+    background-image: linear-gradient(94.42deg, #0B2F8D 3.94%, #0B2F56 96.44%);
+
+
+
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-poppins {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+}
+.font-dm{
+    font-family: "DM Sans",sans-serif;
+}
+
+.font-poppins-italic {
+    font-family: "Poppins", sans-serif;
+    font-style: italic;
+}
+.font-dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.font-roboto {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.font-dm-sans {
+    font-family: "DM Sans", sans-serif;
+    font-style: normal;
+}
+
+.gradient-animation {
+
+
+    background: linear-gradient(-45deg, #9a93ec, #6c5efc , #8b68ce 40%, #6c2fde );
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 6s ease infinite;
+    -moz-animation: Gradient 6s ease infinite;
+    animation: Gradient 6s ease infinite;
+}
+
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none !important;  /* Hide scrollbar for IE/Edge */
+    scrollbar-width: none !important;  /* Hide scrollbar for Firefox */
+  }
+  
+
+
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+
+@keyframes scroll {
+    to {
+        transform: translate(calc(-50% - 0.5rem));
+    }
+}
+
+.animate-scroll {
+    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+/* .animate-scroll:hover {
+    animation-play-state: paused !important;
+  } */
+  .animate-scroll2 {
+    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+}
+
+.animate-scroll2:hover {
+    animation-play-state: paused !important;
+  }
+  
+
+.mostTrustedGradient {
+    background: linear-gradient(to right, #B58D26, #E0BC5E, #B58E29) !important;
+    top: -14px !important;
+     right: 116px !important;
+}
+ 
+.vipPlanGradient {
+    background: linear-gradient(to bottom, #B58D26 0%, #E0BC5E 50%, #B58E29 100%) !important
+}
+
+.CustomGaugeChart .recharts-wrapper {
+  top:-35px !important
+}
+
+@media (max-width:768px) {
+    .CustomGaugeChart .recharts-wrapper {
+        top:-5px !important
+      }
+}
+
+.chartCardShadow {
+    box-shadow: 1.23px 1.23px 4.32px rgba(0, 0, 0, 0.02);
+}
+
+@keyframes spin-slow {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 8s linear infinite; /* Adjust duration as needed */
+  }
+  
+  .attorneyHeadingGradient {
+    background:  linear-gradient(135.19deg, #ECA724 -7.37%, #694500 123.18%) !important
+}
+
+.attorneyRightFade {
+    background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 80%, rgba(255, 255, 255, 0) 100%) !important
+ }
+
+.attorneyLeftFade {
+     background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 80%, rgba(255, 255, 255, 0) 100%) !important
+}
+
+.bg-gold-gradient {
+    background: linear-gradient(180deg, #CDA53D 0%, #B58D26 25%, #E0BC5E 50%, #B58E29 75%, #CDA53D 100%);
+    /* border: 3px solid white; */
+  }
+
+  .gradient-column {
+    background: linear-gradient(179.2deg, #CDA53D -10.22%, #B58D26 -10.21%, #E0BC5E 50.63%, #B58E29 107.03%, #CDA53D 107.04%);
+  }
+
+  .gradient-border-pills {
+    border: 0.72px solid;
+    border-image-source: linear-gradient(94.42deg, rgba(11, 47, 141, 0.25) 3.94%, rgba(11, 47, 86, 0.25) 96.44%);
+    border-image-slice: 1;
+    border-radius: 72px; /* Ensure border radius is applied */
+    -webkit-mask-image: radial-gradient(circle, white 100%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
