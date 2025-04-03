@@ -41,7 +41,7 @@ const BlogDetails2 = () => {
     <div className="container mx-auto p-4 flex flex-col items-center">
       <h1 className="text-3xl font-bold mt-10">{blog.title}</h1>
       <img
-        src={`http://localhost:3000${blog.thumbnail.url}`}
+        src={`http://localhost:3000/${blog.thumbnail.url}`}
         alt={blog.thumbnail.alt}
         className="w-[60%] h-[25%] my-4 rounded"
       />

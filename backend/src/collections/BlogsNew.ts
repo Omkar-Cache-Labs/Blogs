@@ -4,6 +4,7 @@ export const BlogsNew: CollectionConfig = {
     slug: 'blogsnew',
     admin: {
       useAsTitle: 'title',
+      defaultColumns: ['title', 'thumbnail', 'createdAt'],
     },
     access: {
       read: () => true, // Allow public read access
@@ -16,17 +17,17 @@ export const BlogsNew: CollectionConfig = {
         label: 'Blogs Card Heading',
       },
       {
+        name: 'subheading',
+        type: 'text',
+        required: true,
+        label: 'Blogs Content Subheading',
+      },
+      {
         name: 'thumbnail',
         type: 'upload',
         relationTo: 'media',
         required: true,
         label: 'Blogs Card Thumbnail',
-      },
-      {
-        name: 'slug',
-        type: 'text',
-        required: true,
-        unique: true, // Ensure unique URLs for each blog post
       },
       {
         name: 'content',

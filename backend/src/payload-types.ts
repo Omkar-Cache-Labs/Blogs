@@ -72,6 +72,7 @@ export interface Config {
     blogs: Blog;
     BlogsPage: BlogsPage;
     blogsnew: Blogsnew;
+    banner: Banner;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -83,6 +84,7 @@ export interface Config {
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     BlogsPage: BlogsPageSelect<false> | BlogsPageSelect<true>;
     blogsnew: BlogsnewSelect<false> | BlogsnewSelect<true>;
+    banner: BannerSelect<false> | BannerSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -200,8 +202,8 @@ export interface BlogsPage {
 export interface Blogsnew {
   id: string;
   title: string;
+  subheading: string;
   thumbnail: string | Media;
-  slug: string;
   content: {
     root: {
       type: string;
@@ -219,6 +221,18 @@ export interface Blogsnew {
   };
   createdAt: string;
   updatedAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "banner".
+ */
+export interface Banner {
+  id: string;
+  title: string;
+  bannerImage: string | Media;
+  link: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -246,6 +260,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blogsnew';
         value: string | Blogsnew;
+      } | null)
+    | ({
+        relationTo: 'banner';
+        value: string | Banner;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -350,11 +368,22 @@ export interface BlogsPageSelect<T extends boolean = true> {
  */
 export interface BlogsnewSelect<T extends boolean = true> {
   title?: T;
+  subheading?: T;
   thumbnail?: T;
-  slug?: T;
   content?: T;
   createdAt?: T;
   updatedAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "banner_select".
+ */
+export interface BannerSelect<T extends boolean = true> {
+  title?: T;
+  bannerImage?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

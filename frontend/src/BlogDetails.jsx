@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 // ✅ API URL Configuration
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://localhost:3001";
 
 // ✅ Component to Render Lexical Content Correctly
 function RenderLexicalContent({ content }) {
@@ -31,9 +31,31 @@ function RenderLexicalContent({ content }) {
         };
 
         // Extract and format all text content from the children array
-        const textContent = node.children?.map((child, i) => 
-            applyFormatting(child.text || "", child.format)
-        );
+        const renderTextContent = (children) => {
+            return children.map((child, i) => {
+                if (child.type === "link" && child.fields?.url) {
+                    const linkText = child.children?.[0]?.text || "Click here";
+                    const linkUrl = child.fields.url;
+                    const openInNewTab = child.fields.newTab ? "_blank" : "_self";
+
+                    return (
+                        <div className="flex justify-center w-full">
+                        <a 
+                            key={i} 
+                            href={linkUrl} 
+                            target={openInNewTab} 
+                            rel="noopener noreferrer" 
+                            className="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+                        >
+                            {linkText}
+                        </a>
+                        </div>
+                    );
+                } else {
+                    return applyFormatting(child.text || "", child.format);
+                }
+            });
+        };
 
         if (node.type === "heading") {
             const headingStyles = {
@@ -49,14 +71,14 @@ function RenderLexicalContent({ content }) {
 
             return (
                 <node.tag key={index} className={headingClass}>
-                    {textContent}
+                    {renderTextContent(node.children || [])}
                 </node.tag>
             );
         } 
         else if (node.type === "paragraph") {
             return (
                 <p key={index} className="text-base text-gray-900 my-2 leading-relaxed">
-                    {textContent}
+                    {renderTextContent(node.children || [])}
                 </p>
             );
         } 
@@ -68,7 +90,7 @@ function RenderLexicalContent({ content }) {
                     {node.children.map((item, i) => (
                         <li key={i} className={`text-gray-700 text-base ${isCheckList && "flex items-center gap-2"}`}>
                             {isCheckList && <input type="checkbox" className="w-4 h-4 accent-blue-500" />}
-                            {item.children.map((child) => applyFormatting(child.text || "", child.format))}
+                            {renderTextContent(item.children || [])}
                         </li>
                     ))}
                 </ul>
@@ -77,8 +99,36 @@ function RenderLexicalContent({ content }) {
         else if (node.type === "quote") {
             return (
                 <blockquote key={index} className="border-l-4 border-gray-400 pl-4 italic text-gray-700 bg-gray-100 p-3 rounded-md my-4">
-                    {textContent}
+                    {renderTextContent(node.children || [])}
                 </blockquote>
+            );
+        }
+        else if (node.type === "upload" && node.relationTo === "media") {
+            return (
+                <div key={index} className="flex justify-center my-4">
+                    <img 
+                        src={`${BASE_URL}${node.value?.url}`} 
+                        alt={node.value?.alt || "Uploaded Image"} 
+                        className="max-w-full h-auto rounded-md shadow-lg"
+                    />
+                </div>
+            );
+        }
+        else if (node.type === "link") {
+            const linkText = node.children?.[0]?.children?.[0]?.text || "Click here";
+            const linkUrl = node.fields?.url || "#";
+            const openInNewTab = node.fields?.newTab ? "_blank" : "_self";
+
+            return (
+                <a 
+                    key={index} 
+                    href={linkUrl} 
+                    target={openInNewTab} 
+                    rel="noopener noreferrer" 
+                    className="text-blue-600 underline hover:text-blue-800 font-medium"
+                >
+                    {linkText}
+                </a>
             );
         }
         return null;
@@ -133,19 +183,21 @@ const RenderNode = ({ node }) => {
 
 // ✅ Main BlogDetails Component
 const BlogDetails = () => {
-  const { slug } = useParams();
+  const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const [banner, setBanner] = useState(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/blogsnew?where[slug]=${slug}`);
+        const res = await fetch(`${BASE_URL}/api/blogsnew/${id}`);
         const data = await res.json();
+        console.log(data, "data");
 
-        if (data.docs?.length > 0) {
-          setBlog(data.docs[0]);
-          console.log("Blog Data:", data.docs[0]); // Debugging
-          console.log("Lexical Content:", data.docs[0].content); // Debugging
+        if (data) {
+          setBlog(data);
+          console.log("Blog Data:", data); // Debugging
+          console.log("Lexical Content:", data.content); // Debugging
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
@@ -153,15 +205,42 @@ const BlogDetails = () => {
     };
 
     fetchBlog();
-  }, [slug]);
+  }, [id]);
+
+  useEffect(() => {
+    const fetchBanner = async () => {
+      try {
+        const res = await fetch("http://localhost:3001/api/banner"); // Update API URL if needed
+        const data = await res.json();
+        setBanner(data.docs[0]); // Payload CMS returns data inside `docs`
+        console.log(data.docs[0], "banner data");
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
+
+    fetchBanner();
+  }, []);
 
   console.log(blog, "blogggg")
 
   if (!blog) return <p>Loading...</p>;
 
   return (
-    <div className="container mx-auto px-8 py-4 flex flex-col items-start text-justify w-[90%] md:w-[70%]  mt-4">
-      <h1 className="font-bold text-4xl text-center mt-5">{blog.title}</h1>
+    <div className="container mx-auto px-8 py-4 flex flex-col items-center text-justify w-[90%] md:w-[70%]  mt-4">
+      {banner.bannerImage && (
+        <a 
+        href={banner.link} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className=""
+    >
+        <img src={`${BASE_URL}${banner.bannerImage?.url}`} alt="banner Image" />
+        </a>
+      )}
+      <div className="flex justify-start w-full">
+      <h1 className="font-bold text-4xl text-center mt-20 mb-10">{blog.title}</h1>
+      </div>
 
       {blog.thumbnail && (
         <img
